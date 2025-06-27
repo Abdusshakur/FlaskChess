@@ -20,9 +20,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            cd FlaskChess
+            cd /home/ubuntu/FlaskChess
             git pull origin master
             source venv/bin/activate
             pkill gunicorn || true
-            gunicorn -w 4 -b 127.0.0.1:5000 flask_app:app &
-            sudo systemctl restart nginx
+            nohup gunicorn -w 4 -b 127.0.0.1:5000 flask_app:app > gunicorn.log 2>&1 &
